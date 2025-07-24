@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -61,8 +62,7 @@ fun BookListScreenRoot(
                 else -> Unit
             }
             viewModel.onAction(action)
-        }
-    )
+        })
 }
 
 
@@ -110,7 +110,7 @@ private fun BookListScreen(
             ) {
                 TabRow(
                     selectedTabIndex = state.selectedTabIndex,
-                    modifier = Modifier.padding(vertical = 12.dp).widthIn(max = 700.dp)
+                    modifier = Modifier.padding(bottom = 12.dp).widthIn(max = 700.dp)
                         .fillMaxWidth(),
                     containerColor = DesertWhite,
                     indicator = { tabPositions ->
@@ -130,7 +130,12 @@ private fun BookListScreen(
                     ) {
                         Text(
                             text = stringResource(Res.string.search_results),
-                            modifier = Modifier.padding(vertical = 12.dp)
+                            fontWeight = if (state.selectedTabIndex == 0) {
+                                FontWeight.Bold
+                            } else {
+                                FontWeight.Normal
+                            },
+                            modifier = Modifier.padding(vertical = 16.dp)
                         )
                     }
                     Tab(
@@ -144,7 +149,12 @@ private fun BookListScreen(
                     ) {
                         Text(
                             text = stringResource(Res.string.favorites),
-                            modifier = Modifier.padding(vertical = 12.dp)
+                            fontWeight = if (state.selectedTabIndex == 1) {
+                                FontWeight.Bold
+                            } else {
+                                FontWeight.Normal
+                            },
+                            modifier = Modifier.padding(vertical = 16.dp)
                         )
                     }
                 }
@@ -152,8 +162,7 @@ private fun BookListScreen(
                 Spacer(modifier = Modifier.height(4.dp))
 
                 HorizontalPager(
-                    state = pagerState,
-                    modifier = Modifier.fillMaxWidth().weight(1f)
+                    state = pagerState, modifier = Modifier.fillMaxWidth().weight(1f)
                 ) { pageIndex ->
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         when (pageIndex) {
@@ -221,9 +230,25 @@ private fun BookListScreen(
     }
 }
 
+val books = (1..100).map {
+    Book(
+        id = it.toString(),
+        title = "Book $it",
+        authors = listOf("Author $it"),
+        imageUrl = "https://picsum.photos/200/300?random=$it",
+        description = "Description $it",
+        languages = emptyList(),
+        firstPublishYear = null,
+        averageRating = 4.567,
+        ratingCount = 5,
+        numPages = 100,
+        numEditions = 3
+    )
+}
+
 @Preview
 @Composable
 private fun BookListScreenPreview() {
     BookListScreen(
-        state = BookListState(), onAction = {})
+        state = BookListState(searchResults = books), onAction = {})
 }
