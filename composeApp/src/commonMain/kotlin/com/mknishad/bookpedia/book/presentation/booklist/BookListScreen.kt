@@ -74,7 +74,7 @@ private fun BookListScreen(
     val pagerState = rememberPagerState { 2 }
     val searchResultListState = rememberLazyListState()
 
-    LaunchedEffect(state.searchResult) {
+    LaunchedEffect(state.searchResults) {
         searchResultListState.animateScrollToItem(0)
     }
 
@@ -171,7 +171,7 @@ private fun BookListScreen(
                                             )
                                         }
 
-                                        state.searchResult.isEmpty() -> {
+                                        state.searchResults.isEmpty() -> {
                                             Text(
                                                 text = stringResource(Res.string.no_search_results),
                                                 textAlign = TextAlign.Center,
@@ -182,7 +182,7 @@ private fun BookListScreen(
 
                                         else -> {
                                             BookList(
-                                                books = state.searchResult,
+                                                books = state.searchResults,
                                                 onBookClick = {
                                                     onAction(BookListAction.OnBookClick(it))
                                                 },

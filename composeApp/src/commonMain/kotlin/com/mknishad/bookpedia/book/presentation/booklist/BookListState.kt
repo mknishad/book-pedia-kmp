@@ -5,7 +5,7 @@ import com.mknishad.bookpedia.core.presentation.UiText
 
 data class BookListState(
     val searchQuery: String = "Kotlin",
-    val searchResult: List<Book> = books,
+    val searchResults: List<Book> = books,
     val favoriteBooks: List<Book> = emptyList(),
     val isLoading: Boolean = false,
     val selectedTabIndex: Int = 0,
@@ -20,7 +20,7 @@ val books = (1..100).map {
         imageUrl = "https://picsum.photos/200/300?random=$it",
         description = "Description $it",
         languages = emptyList(),
-        firstPublishedYear = null,
+        firstPublishYear = null,
         averageRating = 4.567,
         ratingCount = 5,
         numPages = 100,
