@@ -145,7 +145,7 @@ fun BookDetailScreen(
                             state.book.languages.forEach { language ->
                                 BookChip(
                                     size = ChipSize.SMALL,
-                                    modifier = Modifier.padding(horizontal = 4.dp)
+                                    modifier = Modifier.padding(4.dp)
                                 ) {
                                     Text(
                                         text = language.uppercase(),
